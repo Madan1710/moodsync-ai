@@ -1,0 +1,46 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual envs ---
+.venv/
+venv/
+env/
+.python-version
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# --- Project caches ---
+.cache/
+.streamlit/secrets.toml
+
+# --- Hugging Face / Whisper caches (point HF_HOME here if you want them in-repo) ---
+hf_cache/
+whisper_cache/
+
+# --- Optional: large generated artefacts ---
+# Comment these out if you DO want to ship them in git.
+# assets/synthetic_fusion_data.pt
+# assets/fusion_mlp.pt
+
+# --- Logs / temporary upload files ---
+*.log
+/tmp/
