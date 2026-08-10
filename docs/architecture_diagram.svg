@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4C78A8"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F58518"/>
+    </marker>
+    <linearGradient id="vision-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5DA8E8"/>
+      <stop offset="100%" stop-color="#3D7BB8"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7AB970"/>
+      <stop offset="100%" stop-color="#4C8B45"/>
+    </linearGradient>
+    <linearGradient id="audio-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8A05D"/>
+      <stop offset="100%" stop-color="#B8773D"/>
+    </linearGradient>
+    <linearGradient id="fusion-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#B279A2"/>
+      <stop offset="100%" stop-color="#825278"/>
+    </linearGradient>
+    <linearGradient id="gen-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E45756"/>
+      <stop offset="100%" stop-color="#A03B3A"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- title -->
+  <text x="550" y="38" text-anchor="middle" font-size="24" font-weight="700" fill="#1F2937">MoodSyncAI · Multi-Modal Pipeline</text>
+  <text x="550" y="62" text-anchor="middle" font-size="14" fill="#6B7280">Vision + Text + Audio → Fusion → Generative Summary</text>
+
+  <!-- ============== INPUT LAYER ============== -->
+  <g font-size="13" fill="#374151">
+    <rect x="60" y="100" width="160" height="60" rx="8" fill="#F3F4F6" stroke="#9CA3AF"/>
+    <text x="140" y="125" text-anchor="middle" font-weight="600">📸 Image / video</text>
+    <text x="140" y="145" text-anchor="middle" font-size="11" fill="#6B7280">jpg, png, mp4, webcam</text>
+
+    <rect x="60" y="320" width="160" height="60" rx="8" fill="#F3F4F6" stroke="#9CA3AF"/>
+    <text x="140" y="345" text-anchor="middle" font-weight="600">💬 Text</text>
+    <text x="140" y="365" text-anchor="middle" font-size="11" fill="#6B7280">typed input</text>
+
+    <rect x="60" y="540" width="160" height="60" rx="8" fill="#F3F4F6" stroke="#9CA3AF"/>
+    <text x="140" y="565" text-anchor="middle" font-weight="600">🎤 Audio</text>
+    <text x="140" y="585" text-anchor="middle" font-size="11" fill="#6B7280">wav / mp3 / m4a</text>
+  </g>
+
+  <!-- ============== PRE-PROCESSING ============== -->
+  <g font-size="12">
+    <rect x="270" y="100" width="170" height="60" rx="8" fill="#FEF3C7" stroke="#D97706"/>
+    <text x="355" y="125" text-anchor="middle" font-weight="600" fill="#92400E">Face detection</text>
+    <text x="355" y="143" text-anchor="middle" font-size="11" fill="#92400E">MediaPipe (full-range)</text>
+
+    <rect x="270" y="320" width="170" height="60" rx="8" fill="#FEF3C7" stroke="#D97706"/>
+    <text x="355" y="345" text-anchor="middle" font-weight="600" fill="#92400E">Tokenizer</text>
+    <text x="355" y="363" text-anchor="middle" font-size="11" fill="#92400E">RoBERTa BPE, max 256</text>
+
+    <rect x="270" y="540" width="170" height="60" rx="8" fill="#FEF3C7" stroke="#D97706"/>
+    <text x="355" y="563" text-anchor="middle" font-weight="600" fill="#92400E">Resample 16kHz mono</text>
+    <text x="355" y="581" text-anchor="middle" font-size="11" fill="#92400E">librosa</text>
+  </g>
+
+  <!-- ============== MODEL LAYER ============== -->
+  <g font-size="12" fill="white">
+    <rect x="490" y="80" width="220" height="100" rx="10" fill="url(#vision-grad)" filter="url(#shadow)"/>
+    <text x="600" y="105" text-anchor="middle" font-weight="700" font-size="14">Vision Transformer</text>
+    <text x="600" y="125" text-anchor="middle" font-size="11">trpakov/vit-face-expression</text>
+    <text x="600" y="143" text-anchor="middle" font-size="11">7-class FER2013</text>
+    <text x="600" y="161" text-anchor="middle" font-size="11" font-style="italic">+ Grad-CAM heatmap</text>
+
+    <rect x="490" y="300" width="220" height="100" rx="10" fill="url(#text-grad)" filter="url(#shadow)"/>
+    <text x="600" y="325" text-anchor="middle" font-weight="700" font-size="14">DistilRoBERTa</text>
+    <text x="600" y="345" text-anchor="middle" font-size="11">j-hartmann/emotion-distilroberta</text>
+    <text x="600" y="363" text-anchor="middle" font-size="11">7-class Ekman emotions</text>
+    <text x="600" y="381" text-anchor="middle" font-size="11" font-style="italic">+ token attention</text>
+
+    <rect x="490" y="520" width="220" height="100" rx="10" fill="url(#audio-grad)" filter="url(#shadow)"/>
+    <text x="600" y="545" text-anchor="middle" font-weight="700" font-size="14">HuBERT + Whisper</text>
+    <text x="600" y="565" text-anchor="middle" font-size="11">superb/hubert-large-superb-er</text>
+    <text x="600" y="583" text-anchor="middle" font-size="11">openai/whisper-tiny → text</text>
+    <text x="600" y="601" text-anchor="middle" font-size="11" font-style="italic">3rd modality (extended)</text>
+  </g>
+
+  <!-- ============== ALIGNMENT LAYER ============== -->
+  <g font-size="11">
+    <rect x="745" y="180" width="120" height="50" rx="6" fill="#E0E7FF" stroke="#6366F1"/>
+    <text x="805" y="200" text-anchor="middle" font-weight="600" fill="#3730A3">Canonical 7-vec</text>
+    <text x="805" y="217" text-anchor="middle" font-size="10" fill="#3730A3">+ temperature scale</text>
+
+    <rect x="745" y="350" width="120" height="50" rx="6" fill="#E0E7FF" stroke="#6366F1"/>
+    <text x="805" y="370" text-anchor="middle" font-weight="600" fill="#3730A3">Canonical 7-vec</text>
+    <text x="805" y="387" text-anchor="middle" font-size="10" fill="#3730A3">label-aligned</text>
+
+    <rect x="745" y="540" width="120" height="50" rx="6" fill="#E0E7FF" stroke="#6366F1"/>
+    <text x="805" y="560" text-anchor="middle" font-weight="600" fill="#3730A3">Canonical 7-vec</text>
+    <text x="805" y="577" text-anchor="middle" font-size="10" fill="#3730A3">4→7 projection</text>
+  </g>
+
+  <!-- ============== FUSION ============== -->
+  <rect x="900" y="285" width="170" height="170" rx="12" fill="url(#fusion-grad)" filter="url(#shadow)"/>
+  <text x="985" y="312" text-anchor="middle" font-weight="700" font-size="15" fill="white">Fusion Layer</text>
+  <text x="985" y="335" text-anchor="middle" font-size="11" fill="white">Heuristic OR Learned MLP</text>
+  <line x1="915" y1="345" x2="1055" y2="345" stroke="white" stroke-opacity="0.4"/>
+  <text x="985" y="362" text-anchor="middle" font-size="11" fill="white">• Weighted average</text>
+  <text x="985" y="379" text-anchor="middle" font-size="11" fill="white">• 25→64→32→8 MLP</text>
+  <text x="985" y="396" text-anchor="middle" font-size="11" fill="white">• JS-divergence check</text>
+  <text x="985" y="413" text-anchor="middle" font-size="11" fill="white">• Valence rule</text>
+  <text x="985" y="437" text-anchor="middle" font-size="12" fill="white" font-weight="600">→ mismatch flag</text>
+
+  <!-- ============== OUTPUT ============== -->
+  <rect x="380" y="650" width="320" height="60" rx="10" fill="url(#gen-grad)" filter="url(#shadow)"/>
+  <text x="540" y="676" text-anchor="middle" font-weight="700" font-size="14" fill="white">flan-T5 generative summary</text>
+  <text x="540" y="697" text-anchor="middle" font-size="11" fill="white">+ deterministic template fallback</text>
+
+  <!-- ============== ARROWS ============== -->
+  <g stroke-width="2" fill="none" marker-end="url(#arrow)" stroke="#4C78A8">
+    <line x1="220" y1="130" x2="270" y2="130"/>
+    <line x1="220" y1="350" x2="270" y2="350"/>
+    <line x1="220" y1="570" x2="270" y2="570"/>
+
+    <line x1="440" y1="130" x2="490" y2="130"/>
+    <line x1="440" y1="350" x2="490" y2="350"/>
+    <line x1="440" y1="570" x2="490" y2="570"/>
+
+    <line x1="710" y1="130" x2="745" y2="200"/>
+    <line x1="710" y1="350" x2="745" y2="375"/>
+    <line x1="710" y1="570" x2="745" y2="565"/>
+  </g>
+
+  <!-- alignment to fusion -->
+  <g stroke-width="2.5" fill="none" marker-end="url(#arrow-orange)" stroke="#F58518">
+    <line x1="865" y1="205" x2="900" y2="320"/>
+    <line x1="865" y1="375" x2="900" y2="370"/>
+    <line x1="865" y1="565" x2="900" y2="420"/>
+  </g>
+
+  <!-- whisper transcript loop back to text -->
+  <path d="M 600 610 Q 380 690 380 410 Q 380 380 460 380" stroke="#9CA3AF" stroke-width="1.5"
+        stroke-dasharray="4,4" fill="none" marker-end="url(#arrow)"/>
+  <text x="380" y="620" font-size="11" fill="#6B7280" font-style="italic">Whisper transcript → text channel</text>
+
+  <!-- fusion to generator -->
+  <path d="M 985 460 Q 985 660 700 680" stroke="#F58518" stroke-width="2.5" fill="none" marker-end="url(#arrow-orange)"/>
+
+  <!-- legend -->
+  <g font-size="11" transform="translate(60, 660)">
+    <text font-weight="600" fill="#374151">Pipeline</text>
+    <rect x="0" y="10" width="14" height="10" fill="#5DA8E8"/>
+    <text x="20" y="20" fill="#6B7280">Vision branch</text>
+    <rect x="120" y="10" width="14" height="10" fill="#7AB970"/>
+    <text x="140" y="20" fill="#6B7280">Text branch</text>
+    <rect x="240" y="10" width="14" height="10" fill="#E8A05D"/>
+    <text x="260" y="20" fill="#6B7280">Audio branch (extended)</text>
+  </g>
+</svg>
