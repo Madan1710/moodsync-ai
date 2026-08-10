@@ -1,0 +1,19 @@
+[theme]
+base = "light"
+primaryColor = "#F58518"            # the amber used for the mismatch badge
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F7FB"
+textColor = "#1F2937"
+font = "sans serif"
+
+[server]
+headless = true
+runOnSave = false
+maxUploadSize = 50                  # MB; enough for a short video
+
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = true
+toolbarMode = "minimal"
