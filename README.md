@@ -29,7 +29,7 @@ is the default text in the UI so you can reproduce the canonical mismatch flow i
 
 ```bash
 # 1.  Clone & install
-git clone <your-fork-url> moodsync-ai
+git clone https://github.com/Madan1710/moodsync-ai.git
 cd moodsync-ai
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
